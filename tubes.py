@@ -113,3 +113,43 @@ def view_questions():
         ttk.Label(questions_window, text=f"Soal {i+1}: {q['question']}", font=("Comic Sans MS", 12), background="#D8BFD8", foreground="gold").pack(pady=5)
 
     ttk.Button(questions_window, text="Tutup", command=questions_window.destroy).pack(pady=10)
+
+# Fungsi Mulai Kuis
+def start_quiz():
+    if not questions:
+        messagebox.showwarning("Peringatan", "Tidak ada soal untuk kuis.")
+        return
+
+    score = 0
+    for i, q in enumerate(questions):
+        answer = simpledialog.askstring(f"Soal {i+1}", q["question"])
+        if answer and answer.lower() == q["answer"].lower():
+            score += 1
+
+    messagebox.showinfo("Skor Akhir", f"Skor Anda: {score}/{len(questions)}")
+
+# GUI Utama
+window = tk.Tk()
+window.title("Aplikasi Kuis Sederhana")
+window.geometry("600x600")
+window.config(bg="#D8BFD8")  # Background ungu muda
+
+# Frame Login
+login_frame = tk.Frame(window, bg="#D8BFD8")
+login_frame.pack(fill="both", expand=True)
+
+# Komponen Login
+tk.Label(login_frame, text="Menu Utama", font=("Comic Sans MS", 24, "bold"), bg="#D8BFD8", fg="gold").pack(pady=50)
+tk.Label(login_frame, text="Silakan lakukan registrasi lebih dulu jika belum memiliki akun", font=("Comic Sans MS", 10, "italic"), bg="#D8BFD8", fg="white").pack(pady=15)
+tk.Label(login_frame, text="Username:", font=("Comic Sans MS", 14), bg="#D8BFD8", fg="white").pack(pady=10)
+username_entry = tk.Entry(login_frame, font=("Comic Sans MS", 14))
+username_entry.pack(pady=5)
+
+tk.Label(login_frame, text="Password:", font=("Comic Sans MS", 14), bg="#D8BFD8", fg="white").pack(pady=5)
+password_entry = tk.Entry(login_frame, show="*", font=("Comic Sans MS", 14))
+password_entry.pack(pady=5)
+
+tk.Button(login_frame, text="Login", command=login, bg="gold", fg="black", font=("Comic Sans MS", 12)).pack(pady=10)
+tk.Button(login_frame, text="Register", command=register, bg="gold", fg="black", font=("Comic Sans MS", 12)).pack(pady=10)
+
+window.mainloop()
