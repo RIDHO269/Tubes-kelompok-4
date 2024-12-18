@@ -23,23 +23,40 @@ def register():
     register_window = tk.Toplevel(window)
     register_window.title("Register")
     register_window.geometry("450x450")
-    register_window.config(bg="#2d3e50")  # Darker background for register window
+    register_window.config(bg="#D8BFD8")  # Latar belakang ungu muda
 
-    ttk.Label(register_window, text="Register", font=("Roboto", 18, "bold"), background="#2d3e50", foreground="gold").pack(pady=15)
-
-    ttk.Label(register_window, text="Username:", font=("Roboto", 12), background="#2d3e50", foreground="gold").pack()
-    username_entry = ttk.Entry(register_window, font=("Roboto", 12))
+    tk.Label(register_window, text="Register", font=("Comic Sans MS", 18, "bold"), bg="#D8BFD8", fg="gold").pack(pady=15)
+    tk.Label(register_window, text="Username:", font=("Comic Sans MS", 12), bg="#D8BFD8", fg="white").pack()
+    username_entry = tk.Entry(register_window, font=("Comic Sans MS", 12))
     username_entry.pack(pady=5)
 
-    ttk.Label(register_window, text="Password:", font=("Roboto", 12), background="#2d3e50", foreground="gold").pack()
-    password_entry = ttk.Entry(register_window, show="*", font=("Roboto", 12))
+    tk.Label(register_window, text="Password:", font=("Comic Sans MS", 12), bg="#D8BFD8", fg="white").pack()
+    password_entry = tk.Entry(register_window, show="*", font=("Comic Sans MS", 12))
     password_entry.pack(pady=5)
 
-    ttk.Label(register_window, text="Pilih Role:", font=("Roboto", 12), background="#2d3e50", foreground="gold").pack(pady=5)
-    role_var = tk.StringVar(value="Student")  # Default role
+    tk.Label(register_window, text="Pilih Role:", font=("Comic Sans MS", 12), bg="#D8BFD8", fg="white").pack(pady=5)
+    role_var = tk.StringVar(value="Student")
 
-    student_radio = ttk.Radiobutton(register_window, text="Student", variable=role_var, value="Student", style="TButton")
+    student_radio = tk.Radiobutton(register_window, text="Student", variable=role_var, value="Student", bg="#D8BFD8", fg="white", font=("Comic Sans MS", 12))
     student_radio.pack(pady=3)
-
-    teacher_radio = ttk.Radiobutton(register_window, text="Teacher", variable=role_var, value="Teacher", style="TButton")
+    teacher_radio = tk.Radiobutton(register_window, text="Teacher", variable=role_var, value="Teacher", bg="#D8BFD8", fg="white", font=("Comic Sans MS", 12))
     teacher_radio.pack(pady=3)
+
+    def save_registration():
+        username = username_entry.get()
+        password = password_entry.get()
+        role = role_var.get()
+
+        if not username or username in USER_CREDENTIALS:
+            messagebox.showerror("Error", "Username tidak valid atau sudah digunakan!", parent=register_window)
+            return
+
+        if not password:
+            messagebox.showerror("Error", "Password tidak boleh kosong!", parent=register_window)
+            return
+
+        USER_CREDENTIALS[username] = {'password': password, 'role': role}
+        messagebox.showinfo("Berhasil", "Registrasi berhasil! Silakan login.", parent=register_window)
+        register_window.destroy()
+
+    tk.Button(register_window, text="Register", command=save_registration, bg="gold", fg="black", font=("Comic Sans MS", 12)).pack(pady=10)
