@@ -82,3 +82,34 @@ def main_menu(role):
 def logout():
     main_frame.pack_forget()
     login_frame.pack(fill="both", expand=True)
+
+# Fungsi Tambah Soal
+def add_question():
+    question = simpledialog.askstring("Tambah Soal", "Masukkan pertanyaan:")
+    answer = simpledialog.askstring("Tambah Jawaban", "Masukkan jawaban yang benar:")
+    if question and answer:
+        questions.append({"question": question, "answer": answer})
+        messagebox.showinfo("Berhasil", "Soal berhasil ditambahkan!")
+        view_questions()
+
+# Fungsi Menyelesaikan Penambahan Soal
+def finish_adding_questions():
+    messagebox.showinfo("Berhasil", "Penambahan soal selesai!")
+    logout()
+
+# Fungsi Lihat Soal
+def view_questions():
+    if not questions:
+        messagebox.showinfo("Soal Kosong", "Belum ada soal yang ditambahkan!")
+        return
+
+    questions_window = tk.Toplevel(window)
+    questions_window.title("Daftar Soal")
+    questions_window.geometry("400x400")
+    questions_window.config(bg="#D8BFD8")
+
+    ttk.Label(questions_window, text="Daftar Soal", font=("Comic Sans MS", 18, "bold"), background="#D8BFD8", foreground="gold").pack(pady=10)
+    for i, q in enumerate(questions):
+        ttk.Label(questions_window, text=f"Soal {i+1}: {q['question']}", font=("Comic Sans MS", 12), background="#D8BFD8", foreground="gold").pack(pady=5)
+
+    ttk.Button(questions_window, text="Tutup", command=questions_window.destroy).pack(pady=10)
