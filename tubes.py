@@ -60,3 +60,25 @@ def register():
         register_window.destroy()
 
     tk.Button(register_window, text="Register", command=save_registration, bg="gold", fg="black", font=("Comic Sans MS", 12)).pack(pady=10)
+# Fungsi Menu Utama
+def main_menu(role):
+    login_frame.pack_forget()
+    global main_frame
+    main_frame = tk.Frame(window, bg="#D8BFD8")
+    main_frame.pack(fill="both", expand=True)
+
+    tk.Label(main_frame, text=f"MENU UTAMA - {role.upper()}", font=("Comic Sans MS", 18, "bold"), bg="#D8BFD8", fg="gold").pack(pady=10)
+
+    if role == "Teacher":
+        tk.Button(main_frame, text="TAMBAH SOAL", command=add_question, bg="gold", font=("Comic Sans MS", 12)).pack(pady=5)
+        tk.Button(main_frame, text="SELESAI TAMBAH SOAL", command=finish_adding_questions, bg="gold", font=("Comic Sans MS", 12)).pack(pady=5)
+        tk.Button(main_frame, text="LIHAT SOAL", command=view_questions, bg="gold", font=("Comic Sans MS", 12)).pack(pady=5)
+    elif role == "Student":
+        tk.Button(main_frame, text="MULAI KUIS", command=start_quiz, bg="gold", font=("Comic Sans MS", 12)).pack(pady=5)
+
+    tk.Button(main_frame, text="KELUAR", command=logout, bg="gold", font=("Comic Sans MS", 12)).pack(pady=10)
+
+# Fungsi Logout
+def logout():
+    main_frame.pack_forget()
+    login_frame.pack(fill="both", expand=True)
